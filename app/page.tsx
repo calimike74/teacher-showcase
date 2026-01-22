@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Sparkles, Zap, BookOpen } from 'lucide-react';
+import { ArrowRight, Lightbulb, Zap, BookOpen } from 'lucide-react';
 import ProjectCard from '@/components/ProjectCard';
 import { projects } from '@/lib/projects';
 
@@ -7,16 +7,16 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-purple-50 to-white py-20 sm:py-32">
+      <section className="relative overflow-hidden bg-gradient-to-b from-teal-50 to-white py-20 sm:py-32">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-6">
-              <Sparkles className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-6">
+              <Lightbulb className="w-4 h-4" />
               Built by a teacher, for teachers
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               What happens when a teacher discovers{' '}
-              <span className="text-purple-600">Claude Code</span>
+              <span className="text-teal-600">Claude Code</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8">
               I&apos;m a Music Technology teacher who built three production tools in a few weeks
@@ -25,7 +25,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/getting-started"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 text-white font-medium rounded-lg hover:bg-purple-700 transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-rose-500 text-white font-medium rounded-lg hover:bg-rose-600 transition-colors"
               >
                 Get Started <ArrowRight className="w-4 h-4" />
               </Link>
@@ -45,15 +45,15 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-purple-600">3</div>
+              <div className="text-3xl font-bold text-teal-600">3</div>
               <div className="text-sm text-gray-600">Production Apps</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-purple-600">0</div>
+              <div className="text-3xl font-bold text-teal-600">0</div>
               <div className="text-sm text-gray-600">Prior Coding Experience</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-purple-600">30+</div>
+              <div className="text-3xl font-bold text-teal-600">30+</div>
               <div className="text-sm text-gray-600">Students Using Daily</div>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function Home() {
           <div className="text-center mt-8">
             <Link
               href="/projects"
-              className="inline-flex items-center gap-2 text-purple-600 font-medium hover:text-purple-700"
+              className="inline-flex items-center gap-2 text-teal-600 font-medium hover:text-teal-700"
             >
               See detailed project breakdowns <ArrowRight className="w-4 h-4" />
             </Link>
@@ -94,8 +94,8 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                <BookOpen className="w-6 h-6 text-purple-600" />
+              <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+                <BookOpen className="w-6 h-6 text-teal-600" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">You Know the Problems</h3>
               <p className="text-sm text-gray-600">
@@ -104,8 +104,8 @@ export default function Home() {
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                <Zap className="w-6 h-6 text-purple-600" />
+              <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+                <Zap className="w-6 h-6 text-teal-600" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Claude Handles the Code</h3>
               <p className="text-sm text-gray-600">
@@ -114,8 +114,8 @@ export default function Home() {
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl border border-gray-200">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                <Sparkles className="w-6 h-6 text-purple-600" />
+              <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+                <Lightbulb className="w-6 h-6 text-teal-600" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Free Hosting Exists</h3>
               <p className="text-sm text-gray-600">
@@ -130,17 +130,17 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-2xl p-8 sm:p-12 text-center">
+          <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-2xl p-8 sm:p-12 text-center">
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
               Ready to build something?
             </h2>
-            <p className="text-purple-100 mb-8 max-w-xl mx-auto">
+            <p className="text-teal-100 mb-8 max-w-xl mx-auto">
               Start with the Getting Started guide. In an afternoon, you could have
               your first educational tool deployed and working.
             </p>
             <Link
               href="/getting-started"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-teal-600 font-medium rounded-lg hover:bg-teal-50 transition-colors"
             >
               Get Started <ArrowRight className="w-4 h-4" />
             </Link>

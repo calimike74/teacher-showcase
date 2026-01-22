@@ -13,13 +13,13 @@ export default function ProjectCard({ project, variant = 'compact' }: ProjectCar
         href={project.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="group block p-6 bg-white rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all"
+        className="group block p-6 bg-white rounded-xl border border-gray-200 hover:border-teal-300 hover:shadow-lg transition-all"
       >
         <div className="flex items-start justify-between mb-3">
-          <h3 className="font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">
+          <h3 className="font-semibold text-gray-900 group-hover:text-teal-600 transition-colors">
             {project.title}
           </h3>
-          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-purple-500 transition-colors" />
+          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-teal-500 transition-colors" />
         </div>
         <p className="text-sm text-gray-600 mb-4">{project.description}</p>
         <div className="flex items-center gap-2 text-xs text-gray-500">
@@ -53,7 +53,7 @@ export default function ProjectCard({ project, variant = 'compact' }: ProjectCar
         <ul className="space-y-2">
           {project.features.map((feature, index) => (
             <li key={index} className="flex items-start gap-2 text-sm text-gray-600">
-              <span className="text-purple-500 mt-1">•</span>
+              <span className="text-rose-500 mt-1">•</span>
               {feature}
             </li>
           ))}
@@ -85,7 +85,7 @@ export default function ProjectCard({ project, variant = 'compact' }: ProjectCar
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-lg hover:bg-teal-700 transition-colors"
         >
           Visit Site <ExternalLink className="w-4 h-4" />
         </a>

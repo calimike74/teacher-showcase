@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X, Sparkles } from 'lucide-react';
+import Image from 'next/image';
+import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -22,7 +23,7 @@ export default function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2 font-semibold text-gray-900">
-              <Sparkles className="w-5 h-5 text-purple-600" />
+              <Image src="/logo.png" alt="Teacher Showcase" width={28} height={28} className="w-7 h-7" />
               <span>Teacher Showcase</span>
             </Link>
           </div>
@@ -35,7 +36,7 @@ export default function Navigation() {
                 href={link.href}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   pathname === link.href
-                    ? 'bg-purple-100 text-purple-700'
+                    ? 'bg-teal-100 text-teal-700'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               >
@@ -67,7 +68,7 @@ export default function Navigation() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block px-4 py-2 rounded-lg text-sm font-medium ${
                   pathname === link.href
-                    ? 'bg-purple-100 text-purple-700'
+                    ? 'bg-teal-100 text-teal-700'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >

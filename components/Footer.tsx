@@ -1,4 +1,5 @@
-import { Sparkles, Github, ExternalLink } from 'lucide-react';
+import Image from 'next/image';
+import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Footer() {
@@ -9,7 +10,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 font-semibold text-gray-900 mb-3">
-              <Sparkles className="w-5 h-5 text-purple-600" />
+              <Image src="/logo.png" alt="Teacher Showcase" width={24} height={24} className="w-6 h-6" />
               <span>Teacher Showcase</span>
             </div>
             <p className="text-sm text-gray-600">
@@ -22,17 +23,17 @@ export default function Footer() {
             <h3 className="font-semibold text-gray-900 mb-3">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/getting-started" className="text-gray-600 hover:text-purple-600 transition-colors">
+                <Link href="/getting-started" className="text-gray-600 hover:text-teal-600 transition-colors">
                   Getting Started Guide
                 </Link>
               </li>
               <li>
-                <Link href="/projects" className="text-gray-600 hover:text-purple-600 transition-colors">
+                <Link href="/projects" className="text-gray-600 hover:text-teal-600 transition-colors">
                   View Projects
                 </Link>
               </li>
               <li>
-                <Link href="/workflow" className="text-gray-600 hover:text-purple-600 transition-colors">
+                <Link href="/workflow" className="text-gray-600 hover:text-teal-600 transition-colors">
                   Development Workflow
                 </Link>
               </li>
@@ -48,7 +49,7 @@ export default function Footer() {
                   href="https://claude.ai/code"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-purple-600 transition-colors inline-flex items-center gap-1"
+                  className="text-gray-600 hover:text-teal-600 transition-colors inline-flex items-center gap-1"
                 >
                   Claude Code <ExternalLink className="w-3 h-3" />
                 </a>
@@ -58,7 +59,7 @@ export default function Footer() {
                   href="https://vercel.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-purple-600 transition-colors inline-flex items-center gap-1"
+                  className="text-gray-600 hover:text-teal-600 transition-colors inline-flex items-center gap-1"
                 >
                   Vercel <ExternalLink className="w-3 h-3" />
                 </a>
@@ -68,7 +69,7 @@ export default function Footer() {
                   href="https://supabase.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-purple-600 transition-colors inline-flex items-center gap-1"
+                  className="text-gray-600 hover:text-teal-600 transition-colors inline-flex items-center gap-1"
                 >
                   Supabase <ExternalLink className="w-3 h-3" />
                 </a>

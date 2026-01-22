@@ -35,7 +35,7 @@ export default function GettingStartedPage() {
                 <h3 className="font-medium text-gray-900">GitHub Account</h3>
                 <p className="text-sm text-gray-600">
                   For storing your code. Free at{' '}
-                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">
+                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline">
                     github.com
                   </a>
                 </p>
@@ -47,7 +47,7 @@ export default function GettingStartedPage() {
                 <h3 className="font-medium text-gray-900">Vercel Account</h3>
                 <p className="text-sm text-gray-600">
                   For hosting your apps. Free tier is generous. Sign up at{' '}
-                  <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">
+                  <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline">
                     vercel.com
                   </a>
                 </p>
@@ -59,7 +59,7 @@ export default function GettingStartedPage() {
                 <h3 className="font-medium text-gray-900">Claude Pro Subscription</h3>
                 <p className="text-sm text-gray-600">
                   Claude Code requires a Claude Pro subscription ($20/month) at{' '}
-                  <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">
+                  <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline">
                     claude.ai
                   </a>
                 </p>
@@ -71,7 +71,7 @@ export default function GettingStartedPage() {
                 <h3 className="font-medium text-gray-900">Supabase Account (Optional)</h3>
                 <p className="text-sm text-gray-600">
                   Only needed if your app stores data. Free tier at{' '}
-                  <a href="https://supabase.com" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline">
+                  <a href="https://supabase.com" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline">
                     supabase.com
                   </a>
                 </p>
@@ -201,8 +201,8 @@ export default function GettingStartedPage() {
         <section className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Tips for Success</h2>
           <div className="space-y-4">
-            <div className="flex items-start gap-4 p-4 bg-purple-50 rounded-lg">
-              <Lightbulb className="w-5 h-5 text-purple-500 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4 p-4 bg-teal-50 rounded-lg">
+              <Lightbulb className="w-5 h-5 text-teal-500 flex-shrink-0 mt-0.5" />
               <div>
                 <h3 className="font-medium text-gray-900">Iterate Quickly</h3>
                 <p className="text-sm text-gray-600">
@@ -211,8 +211,8 @@ export default function GettingStartedPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4 p-4 bg-purple-50 rounded-lg">
-              <Lightbulb className="w-5 h-5 text-purple-500 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4 p-4 bg-teal-50 rounded-lg">
+              <Lightbulb className="w-5 h-5 text-teal-500 flex-shrink-0 mt-0.5" />
               <div>
                 <h3 className="font-medium text-gray-900">Ask Claude to Explain</h3>
                 <p className="text-sm text-gray-600">
@@ -221,8 +221,8 @@ export default function GettingStartedPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4 p-4 bg-purple-50 rounded-lg">
-              <Lightbulb className="w-5 h-5 text-purple-500 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4 p-4 bg-teal-50 rounded-lg">
+              <Lightbulb className="w-5 h-5 text-teal-500 flex-shrink-0 mt-0.5" />
               <div>
                 <h3 className="font-medium text-gray-900">Commit Often</h3>
                 <p className="text-sm text-gray-600">
@@ -231,8 +231,8 @@ export default function GettingStartedPage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4 p-4 bg-purple-50 rounded-lg">
-              <Lightbulb className="w-5 h-5 text-purple-500 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4 p-4 bg-teal-50 rounded-lg">
+              <Lightbulb className="w-5 h-5 text-teal-500 flex-shrink-0 mt-0.5" />
               <div>
                 <h3 className="font-medium text-gray-900">Use What Students Already Know</h3>
                 <p className="text-sm text-gray-600">
@@ -252,7 +252,7 @@ export default function GettingStartedPage() {
               href="https://docs.anthropic.com/en/docs/claude-code"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-purple-300 transition-colors"
+              className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-teal-300 transition-colors"
             >
               <ExternalLink className="w-5 h-5 text-gray-400" />
               <div>
@@ -264,7 +264,7 @@ export default function GettingStartedPage() {
               href="https://nextjs.org/learn"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-purple-300 transition-colors"
+              className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-teal-300 transition-colors"
             >
               <ExternalLink className="w-5 h-5 text-gray-400" />
               <div>
@@ -276,7 +276,7 @@ export default function GettingStartedPage() {
               href="https://vercel.com/docs"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-purple-300 transition-colors"
+              className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-teal-300 transition-colors"
             >
               <ExternalLink className="w-5 h-5 text-gray-400" />
               <div>
@@ -288,7 +288,7 @@ export default function GettingStartedPage() {
               href="https://supabase.com/docs"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-purple-300 transition-colors"
+              className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-teal-300 transition-colors"
             >
               <ExternalLink className="w-5 h-5 text-gray-400" />
               <div>
@@ -300,7 +300,7 @@ export default function GettingStartedPage() {
         </section>
 
         {/* Next Steps */}
-        <section className="p-6 bg-purple-50 rounded-xl">
+        <section className="p-6 bg-teal-50 rounded-xl">
           <h2 className="text-xl font-bold text-gray-900 mb-3">Ready to See What&apos;s Possible?</h2>
           <p className="text-gray-600 mb-4">
             Check out the projects I&apos;ve built to see practical examples of what
@@ -308,7 +308,7 @@ export default function GettingStartedPage() {
           </p>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 text-purple-600 font-medium hover:text-purple-700"
+            className="inline-flex items-center gap-2 text-teal-600 font-medium hover:text-teal-700"
           >
             View Projects <ArrowRight className="w-4 h-4" />
           </Link>

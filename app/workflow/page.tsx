@@ -26,8 +26,8 @@ export default function WorkflowPage() {
           <h2 className="text-2xl font-bold text-gray-900 mb-6">The Build Cycle</h2>
           <div className="space-y-6">
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                <MessageSquare className="w-6 h-6 text-purple-600" />
+              <div className="flex-shrink-0 w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                <MessageSquare className="w-6 h-6 text-teal-600" />
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">1. Describe What You Want</h3>
@@ -40,8 +40,8 @@ export default function WorkflowPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                <Code className="w-6 h-6 text-purple-600" />
+              <div className="flex-shrink-0 w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                <Code className="w-6 h-6 text-teal-600" />
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">2. Claude Writes Code</h3>
@@ -54,8 +54,8 @@ export default function WorkflowPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                <Eye className="w-6 h-6 text-purple-600" />
+              <div className="flex-shrink-0 w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                <Eye className="w-6 h-6 text-teal-600" />
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">3. Test Locally</h3>
@@ -67,8 +67,8 @@ export default function WorkflowPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                <RefreshCw className="w-6 h-6 text-purple-600" />
+              <div className="flex-shrink-0 w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                <RefreshCw className="w-6 h-6 text-teal-600" />
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">4. Iterate</h3>
@@ -80,8 +80,8 @@ export default function WorkflowPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                <Upload className="w-6 h-6 text-purple-600" />
+              <div className="flex-shrink-0 w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                <Upload className="w-6 h-6 text-teal-600" />
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">5. Deploy</h3>
@@ -144,22 +144,22 @@ export default function WorkflowPage() {
           </p>
           <ul className="space-y-2 text-gray-600">
             <li className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+              <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
               <span><strong>First working version:</strong> A few hours per project</span>
             </li>
             <li className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+              <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
               <span><strong>Iteration and polish:</strong> Most of the time goes here</span>
             </li>
             <li className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+              <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
               <span><strong>Bug fixes:</strong> Ongoing, usually quick</span>
             </li>
           </ul>
         </section>
 
         {/* CTA */}
-        <section className="p-6 bg-purple-50 rounded-xl">
+        <section className="p-6 bg-teal-50 rounded-xl">
           <h2 className="text-xl font-bold text-gray-900 mb-3">Want to Try It?</h2>
           <p className="text-gray-600 mb-4">
             The Getting Started guide has everything you need: prerequisites, first project
@@ -167,7 +167,7 @@ export default function WorkflowPage() {
           </p>
           <Link
             href="/getting-started"
-            className="inline-flex items-center gap-2 text-purple-600 font-medium hover:text-purple-700"
+            className="inline-flex items-center gap-2 text-teal-600 font-medium hover:text-teal-700"
           >
             Get Started <ArrowRight className="w-4 h-4" />
           </Link>
