@@ -1,22 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Bebas_Neue } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const bebas = Bebas_Neue({
+  weight: "400",
   subsets: ["latin"],
+  variable: "--font-bebas",
 });
 
 export const metadata: Metadata = {
-  title: "Teacher Showcase | Building with Claude Code",
-  description: "See what a Music Technology teacher built with Claude Code. Learn how to create your own educational tools.",
+  title: "Music Technology A-Level | Student Hub",
+  description: "Your central hub for Music Technology A-Level resources. Access grades, learning tools, and assessments.",
 };
 
 export default function RootLayout({
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
+        className={`${inter.variable} ${bebas.variable} antialiased`}
       >
         <div className="min-h-screen flex flex-col">
           <Navigation />

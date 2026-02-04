@@ -1,26 +1,124 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Warm color palette */
+  --color-primary: #FF6B35;
+  --color-secondary: #F7C948;
+  --color-accent: #E85D75;
+  --color-accent-alt: #FF8C61;
+
+  /* Light mode */
+  --background: #FFFBF5;
+  --foreground: #2D2D2D;
+  --card-bg: #FFFFFF;
+  --card-shadow: rgba(255, 107, 53, 0.1);
+
+  /* Fonts */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-bebas);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-bebas);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1A1A1A;
+    --foreground: #FAFAFA;
+    --card-bg: #2D2D2D;
+    --card-shadow: rgba(255, 107, 53, 0.2);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Animated gradient background */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+  background: linear-gradient(
+    -45deg,
+    #FF6B35,
+    #F7C948,
+    #E85D75,
+    #FF8C61,
+    #F7C948,
+    #FF6B35
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+/* Gradient text effect */
+.gradient-text {
+  background: linear-gradient(135deg, #FF6B35 0%, #E85D75 50%, #F7C948 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card hover effect */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px var(--card-shadow);
+}
+
+/* Scroll indicator animation */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.scroll-indicator {
+  animation: bounce 2s infinite;
+}
+
+/* Display font utility */
+.font-display {
+  font-family: var(--font-display), sans-serif;
+}
+
+/* Iridescent text - muted to match ribbon */
+.iridescent-text {
+  background: linear-gradient(
+    135deg,
+    #D4927A 0%,
+    #D4BC8A 20%,
+    #C8909A 40%,
+    #A89BC8 60%,
+    #8AB4C8 80%,
+    #D4A08A 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

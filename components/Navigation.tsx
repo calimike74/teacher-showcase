@@ -1,47 +1,43 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import Image from 'next/image';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Music } from 'lucide-react';
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/getting-started', label: 'Getting Started' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/workflow', label: 'Workflow' },
+  { href: 'https://grades-dashboard.vercel.app', label: 'Grades', external: true },
+  { href: 'https://interactive-resources-eight.vercel.app', label: 'Resources', external: true },
+  { href: 'https://waveform-assessment.vercel.app', label: 'Assessments', external: true },
 ];
 
 export default function Navigation() {
-  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-md border-b border-[#FF6B35]/10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-2 font-semibold text-gray-900">
-              <Image src="/logo.png" alt="Teacher Showcase" width={28} height={28} className="w-7 h-7" />
-              <span>Teacher Showcase</span>
+            <Link href="/" className="flex items-center gap-2 font-semibold text-[#2D2D2D] dark:text-[#FAFAFA]">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#A89BC8] via-[#C8909A] to-[#D4BC8A] flex items-center justify-center">
+                <Music className="w-5 h-5 text-white" />
+              </div>
+              <span className="hidden sm:inline">Music Tech Hub</span>
             </Link>
           </div>
 
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  pathname === link.href
-                    ? 'bg-teal-100 text-teal-700'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                }`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-lg text-sm font-medium text-[#2D2D2D] dark:text-[#FAFAFA] hover:bg-[#FF6B35]/10 hover:text-[#FF6B35] transition-colors"
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -49,7 +45,7 @@ export default function Navigation() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-gray-600 hover:bg-gray-100"
+              className="p-2 rounded-lg text-[#2D2D2D] dark:text-[#FAFAFA] hover:bg-[#FF6B35]/10"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -59,21 +55,19 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white">
+        <div className="md:hidden border-t border-[#FF6B35]/10 bg-white dark:bg-[#1A1A1A]">
           <div className="px-4 py-3 space-y-1">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-2 rounded-lg text-sm font-medium ${
-                  pathname === link.href
-                    ? 'bg-teal-100 text-teal-700'
-                    : 'text-gray-600 hover:bg-gray-100'
-                }`}
+                className="block px-4 py-2 rounded-lg text-sm font-medium text-[#2D2D2D] dark:text-[#FAFAFA] hover:bg-[#FF6B35]/10 hover:text-[#FF6B35]"
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
           </div>
         </div>

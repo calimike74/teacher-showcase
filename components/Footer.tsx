@@ -1,85 +1,34 @@
-import Image from 'next/image';
-import { ExternalLink } from 'lucide-react';
-import Link from 'next/link';
+import { Music, Linkedin } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 border-t border-gray-100">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bg-[var(--background)] border-t border-[#FF6B35]/10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 font-semibold text-gray-900 mb-3">
-              <Image src="/logo.png" alt="Teacher Showcase" width={24} height={24} className="w-6 h-6" />
-              <span>Teacher Showcase</span>
+          <div className="flex items-center gap-2 text-[var(--foreground)]/60">
+            <div className="w-6 h-6 rounded bg-gradient-to-br from-[#A89BC8] via-[#C8909A] to-[#D4BC8A] flex items-center justify-center">
+              <Music className="w-4 h-4 text-white" />
             </div>
-            <p className="text-sm text-gray-600">
-              Educational tools built with Claude Code. Helping teachers discover what&apos;s possible with AI-assisted development.
+            <span className="text-sm">Music Technology A-Level Resources</span>
+          </div>
+
+          {/* Contact & Credit */}
+          <div className="flex items-center gap-4">
+            <a
+              href="https://www.linkedin.com/in/michael-lehnert-9a784790/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-[var(--foreground)]/60 hover:text-[#A89BC8] transition-colors"
+            >
+              <Linkedin className="w-4 h-4" />
+              <span>Connect</span>
+            </a>
+            <span className="text-[var(--foreground)]/20">|</span>
+            <p className="text-sm text-[var(--foreground)]/40">
+              Built with Claude Code
             </p>
           </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-3">Quick Links</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/getting-started" className="text-gray-600 hover:text-teal-600 transition-colors">
-                  Getting Started Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="/projects" className="text-gray-600 hover:text-teal-600 transition-colors">
-                  View Projects
-                </Link>
-              </li>
-              <li>
-                <Link href="/workflow" className="text-gray-600 hover:text-teal-600 transition-colors">
-                  Development Workflow
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-3">Resources</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a
-                  href="https://claude.ai/code"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-teal-600 transition-colors inline-flex items-center gap-1"
-                >
-                  Claude Code <ExternalLink className="w-3 h-3" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://vercel.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-teal-600 transition-colors inline-flex items-center gap-1"
-                >
-                  Vercel <ExternalLink className="w-3 h-3" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://supabase.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-teal-600 transition-colors inline-flex items-center gap-1"
-                >
-                  Supabase <ExternalLink className="w-3 h-3" />
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-8 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
-          <p>Built with Claude Code by a Music Technology teacher</p>
         </div>
       </div>
     </footer>
