@@ -1,6 +1,7 @@
 import { ChevronDown } from 'lucide-react';
 import MobiusRibbon from '@/components/MobiusRibbon';
 import ToolCards from '@/components/ToolCards';
+import TopicTicker from '@/components/TopicTicker';
 
 export default function Home() {
   return (
@@ -18,9 +19,14 @@ export default function Home() {
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-[#2D2D2D]/70 tracking-wider mb-8">
             A-LEVEL
           </h2>
-          <p className="text-xl sm:text-2xl text-[#2D2D2D]/60 font-light max-w-2xl mx-auto mb-12">
+          <p className="text-xl sm:text-2xl text-[#2D2D2D]/60 font-light max-w-2xl mx-auto mb-8">
             Your learning hub
           </p>
+        </div>
+
+        {/* Scrolling curriculum topics - positioned near bottom */}
+        <div className="absolute bottom-20 left-0 right-0 z-10">
+          <TopicTicker />
         </div>
 
         {/* Scroll indicator */}
