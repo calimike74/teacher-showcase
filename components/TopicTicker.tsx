@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 
 const TOPICS = [
   '1.1 Software and Hardware',
@@ -25,10 +25,47 @@ const TOPICS = [
   '2.6 Levels',
 ];
 
+const BASE_SPEED = 0.3; // pixels per frame — gentle pace
+const EASE_FACTOR = 0.04; // how quickly velocity changes — lower = smoother
+
 export default function TopicTicker() {
-  const [paused, setPaused] = useState(false);
-  // Duplicate for seamless infinite loop
+  const trackRef = useRef<HTMLDivElement>(null);
+  const offset = useRef(0);
+  const velocity = useRef(BASE_SPEED);
+  const targetVelocity = useRef(BASE_SPEED);
+  const rafId = useRef<number>(0);
+
   const doubled = [...TOPICS, ...TOPICS];
+
+  const tick = useCallback(() => {
+    // Ease velocity towards target
+    velocity.current += (targetVelocity.current - velocity.current) * EASE_FACTOR;
+
+    offset.current += velocity.current;
+
+    if (trackRef.current) {
+      const halfWidth = trackRef.current.scrollWidth / 2;
+      if (offset.current >= halfWidth) {
+        offset.current -= halfWidth;
+      }
+      trackRef.current.style.transform = `translateX(-${offset.current}px)`;
+    }
+
+    rafId.current = requestAnimationFrame(tick);
+  }, []);
+
+  useEffect(() => {
+    rafId.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId.current);
+  }, [tick]);
+
+  const handleMouseEnter = () => {
+    targetVelocity.current = 0;
+  };
+
+  const handleMouseLeave = () => {
+    targetVelocity.current = BASE_SPEED;
+  };
 
   return (
     <div
@@ -37,17 +74,14 @@ export default function TopicTicker() {
         maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
         WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
       }}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       aria-hidden="true"
     >
       <div
+        ref={trackRef}
         className="flex gap-3"
-        style={{
-          width: 'max-content',
-          animation: 'tickerScroll 40s linear infinite',
-          animationPlayState: paused ? 'paused' : 'running',
-        }}
+        style={{ width: 'max-content', willChange: 'transform' }}
       >
         {doubled.map((topic, i) => (
           <span
