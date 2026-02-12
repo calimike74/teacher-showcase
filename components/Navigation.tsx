@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { Menu, X, Music } from 'lucide-react';
 
@@ -10,7 +11,7 @@ const navLinks = [
   { href: 'https://waveform-assessment.vercel.app', label: 'Assessments', external: true },
 ];
 
-export default function Navigation() {
+export default function Navigation({ logoSrc }: { logoSrc?: string } = {}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -19,9 +20,13 @@ export default function Navigation() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2 font-semibold text-[#2D2D2D] dark:text-[#FAFAFA]">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#A89BC8] via-[#C8909A] to-[#D4BC8A] flex items-center justify-center">
-                <Music className="w-5 h-5 text-white" />
-              </div>
+              {logoSrc ? (
+                <Image src={logoSrc} alt="Music Tech Hub" width={32} height={32} className="w-8 h-8 rounded-lg object-cover" />
+              ) : (
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#A89BC8] via-[#C8909A] to-[#D4BC8A] flex items-center justify-center">
+                  <Music className="w-5 h-5 text-white" />
+                </div>
+              )}
               <span className="hidden sm:inline">Music Tech Hub</span>
             </Link>
           </div>

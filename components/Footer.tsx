@@ -1,4 +1,5 @@
-import { Music, Linkedin } from 'lucide-react';
+import Image from 'next/image';
+import { Linkedin } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -7,9 +8,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Brand */}
           <div className="flex items-center gap-2 text-[var(--foreground)]/60">
-            <div className="w-6 h-6 rounded bg-gradient-to-br from-[#A89BC8] via-[#C8909A] to-[#D4BC8A] flex items-center justify-center">
-              <Music className="w-4 h-4 text-white" />
-            </div>
+            <Image src="/logos/music-tech-hub.png" alt="Music Tech Hub" width={24} height={24} className="w-6 h-6 rounded object-cover" />
             <span className="text-sm">Music Technology A-Level Resources</span>
           </div>
 
