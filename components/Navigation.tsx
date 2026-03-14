@@ -6,9 +6,9 @@ import { useState } from 'react';
 import { Menu, X, Music } from 'lucide-react';
 
 const navLinks = [
-  { href: 'https://grades-dashboard.vercel.app', label: 'Grades', external: true },
-  { href: 'https://interactive-resources-eight.vercel.app', label: 'Resources', external: true },
-  { href: 'https://waveform-assessment.vercel.app', label: 'Assessments', external: true },
+  { href: 'https://grades.musictechstudio.co.uk', label: 'Grades', external: true },
+  { href: 'https://resources.musictechstudio.co.uk', label: 'Resources', external: true },
+  { href: 'https://assess.musictechstudio.co.uk', label: 'Assessments', external: true },
 ];
 
 export default function Navigation({ logoSrc }: { logoSrc?: string } = {}) {

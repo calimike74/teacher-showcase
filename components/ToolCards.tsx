@@ -14,13 +14,13 @@ const tools: Tool[] = [
   {
     title: 'LEARNING TOOLS',
     description: 'Interactive practice for octaves, periods, and more',
-    href: 'https://interactive-resources-eight.vercel.app',
+    href: 'https://resources.musictechstudio.co.uk',
     icon: Headphones,
   },
   {
     title: 'ASSESSMENTS',
     description: 'Quizzes and practice papers for exam prep',
-    href: 'https://waveform-assessment.vercel.app',
+    href: 'https://assess.musictechstudio.co.uk',
     icon: FileQuestion,
   },
   {
