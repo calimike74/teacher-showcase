@@ -14,8 +14,8 @@ const bebas = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-  title: "Music Technology A-Level | Student Hub",
-  description: "Your central hub for Music Technology A-Level resources. Access grades, learning tools, and assessments.",
+  title: "Music Tech Studio | A-Level Music Technology",
+  description: "Your Music Tech Studio — access grades, interactive learning tools, and assessments for A-Level Music Technology.",
 };
 
 export default function RootLayout({

@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Brand */}
           <div className="flex items-center gap-2 text-[var(--foreground)]/60">
-            <Image src="/logos/music-tech-hub.png" alt="Music Tech Hub" width={24} height={24} className="w-6 h-6 rounded object-cover" />
+            <Image src="/logos/music-tech-hub.png" alt="Music Tech Studio" width={24} height={24} className="w-6 h-6 rounded object-cover" />
             <span className="text-sm">Music Technology A-Level Resources</span>
           </div>
 

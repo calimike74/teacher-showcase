@@ -21,13 +21,13 @@ export default function Navigation({ logoSrc }: { logoSrc?: string } = {}) {
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2 font-semibold text-[#2D2D2D] dark:text-[#FAFAFA]">
               {logoSrc ? (
-                <Image src={logoSrc} alt="Music Tech Hub" width={32} height={32} className="w-8 h-8 rounded-lg object-cover" />
+                <Image src={logoSrc} alt="Music Tech Studio" width={32} height={32} className="w-8 h-8 rounded-lg object-cover" />
               ) : (
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#A89BC8] via-[#C8909A] to-[#D4BC8A] flex items-center justify-center">
                   <Music className="w-5 h-5 text-white" />
                 </div>
               )}
-              <span className="hidden sm:inline">Music Tech Hub</span>
+              <span className="hidden sm:inline">Music Tech Studio</span>
             </Link>
           </div>
 
