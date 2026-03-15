@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, Headphones, FileQuestion, Play, LucideIcon } from 'lucide-react';
+import { ArrowRight, Headphones, FileQuestion, Play, BookOpen, LucideIcon } from 'lucide-react';
 import { useId } from 'react';
 
 interface Tool {
@@ -28,6 +28,12 @@ const tools: Tool[] = [
     description: 'Watch educational videos on key topics',
     href: 'https://remotion-player-site.vercel.app',
     icon: Play,
+  },
+  {
+    title: 'OBSIDIAN',
+    description: 'Browse course notes, resources, and revision materials',
+    href: 'https://publish.obsidian.md/a-level-music-tech-sherborne/a-level-music-tech-sherborne',
+    icon: BookOpen,
   },
 ];
 
@@ -73,7 +79,7 @@ export default function ToolCards() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-4xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-5xl mx-auto">
           {tools.map((tool) => (
             <a
               key={tool.title}

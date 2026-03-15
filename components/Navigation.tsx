@@ -9,6 +9,7 @@ const navLinks = [
   { href: 'https://grades.musictechstudio.co.uk', label: 'Grades', external: true },
   { href: 'https://resources.musictechstudio.co.uk', label: 'Resources', external: true },
   { href: 'https://assess.musictechstudio.co.uk', label: 'Assessments', external: true },
+  { href: 'https://publish.obsidian.md/a-level-music-tech-sherborne/a-level-music-tech-sherborne', label: 'Obsidian', external: true },
 ];
 
 export default function Navigation({ logoSrc }: { logoSrc?: string } = {}) {
