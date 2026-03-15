@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, Headphones, FileQuestion, Play, BookOpen, LucideIcon } from 'lucide-react';
+import { ArrowRight, Headphones, FileQuestion, Play, BookOpen, CalendarCheck, LucideIcon } from 'lucide-react';
 import { useId } from 'react';
 
 interface Tool {
@@ -28,6 +28,12 @@ const tools: Tool[] = [
     description: 'Watch educational videos on key topics',
     href: 'https://remotion-player-site.vercel.app',
     icon: Play,
+  },
+  {
+    title: 'ROOM BOOKINGS',
+    description: 'Book the studio for mixing or recording rooms for tracking sessions',
+    href: 'https://bookings.musictechstudio.co.uk',
+    icon: CalendarCheck,
   },
   {
     title: 'OBSIDIAN',
@@ -79,7 +85,7 @@ export default function ToolCards() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-6 max-w-6xl mx-auto">
           {tools.map((tool) => (
             <a
               key={tool.title}
