@@ -154,61 +154,77 @@ export default function VideoLibraryClient() {
         <div className="flex flex-col md:flex-row gap-8">
           {/* Vertical year tabs — desktop */}
           <nav className="hidden md:flex flex-col gap-1 w-48 shrink-0">
-            {sortedYears.map((year) => {
+            {sortedYears.map((year, i) => {
               const isActive = activeYear.label === year.label;
+              const prevYear = sortedYears[i - 1];
+              const showDivider = prevYear && prevYear.level !== year.level;
               return (
-                <button
-                  key={year.label}
-                  onClick={() => {
-                    setActiveYear(year);
-                    setSearchQuery('');
-                  }}
-                  className={`text-left px-4 py-3 rounded-lg transition-colors ${
-                    isActive
-                      ? 'bg-[var(--card-bg)] shadow-md border border-black/10'
-                      : 'hover:bg-[var(--card-bg)]/60'
-                  }`}
-                >
-                  <span className="flex items-center gap-2">
-                    <span
-                      className={`text-lg font-semibold ${
-                        isActive
-                          ? 'text-[var(--foreground)]'
-                          : 'text-[var(--foreground)]/50'
-                      }`}
-                    >
-                      {year.label}
+                <div key={year.label}>
+                  {showDivider && (
+                    <div className="flex items-center gap-3 my-3 px-1">
+                      <hr className="flex-1 border-t border-[#C5A855]/30" />
+                      <span className="text-[10px] font-semibold tracking-widest text-[#C5A855]/60 uppercase">AS</span>
+                      <hr className="flex-1 border-t border-[#C5A855]/30" />
+                    </div>
+                  )}
+                  <button
+                    onClick={() => {
+                      setActiveYear(year);
+                      setSearchQuery('');
+                    }}
+                    className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                      isActive
+                        ? 'bg-[var(--card-bg)] shadow-md border border-black/10'
+                        : 'hover:bg-[var(--card-bg)]/60'
+                    }`}
+                  >
+                    <span className="flex items-center gap-2">
+                      <span
+                        className={`text-lg font-semibold ${
+                          isActive
+                            ? 'text-[var(--foreground)]'
+                            : 'text-[var(--foreground)]/50'
+                        }`}
+                      >
+                        {year.label}
+                      </span>
+                      <LevelBadge level={year.level} />
                     </span>
-                    <LevelBadge level={year.level} />
-                  </span>
-                  <span className="block text-xs text-[var(--foreground)]/40 mt-0.5">
-                    {year.videos.length} video{year.videos.length !== 1 ? 's' : ''}
-                  </span>
-                </button>
+                    <span className="block text-xs text-[var(--foreground)]/40 mt-0.5">
+                      {year.videos.length} video{year.videos.length !== 1 ? 's' : ''}
+                    </span>
+                  </button>
+                </div>
               );
             })}
           </nav>
 
           {/* Horizontal year tabs — mobile */}
           <div className="md:hidden flex gap-2 overflow-x-auto pb-2 -mt-2">
-            {sortedYears.map((year) => {
+            {sortedYears.map((year, i) => {
               const isActive = activeYear.label === year.label;
+              const prevYear = sortedYears[i - 1];
+              const showDivider = prevYear && prevYear.level !== year.level;
               return (
-                <button
-                  key={year.label}
-                  onClick={() => {
-                    setActiveYear(year);
-                    setSearchQuery('');
-                  }}
-                  className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium shrink-0 transition-colors ${
-                    isActive
-                      ? 'bg-[var(--card-bg)] shadow border border-black/10 text-[var(--foreground)]'
-                      : 'text-[var(--foreground)]/50'
-                  }`}
+                <div key={year.label} className="flex items-center gap-2 shrink-0">
+                  {showDivider && (
+                    <div className="w-px h-6 bg-[#C5A855]/40 shrink-0" />
+                  )}
+                  <button
+                    onClick={() => {
+                      setActiveYear(year);
+                      setSearchQuery('');
+                    }}
+                    className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium shrink-0 transition-colors ${
+                      isActive
+                        ? 'bg-[var(--card-bg)] shadow border border-black/10 text-[var(--foreground)]'
+                        : 'text-[var(--foreground)]/50'
+                    }`}
                 >
                   {year.label}
                   <LevelBadge level={year.level} />
                 </button>
+                </div>
               );
             })}
           </div>
