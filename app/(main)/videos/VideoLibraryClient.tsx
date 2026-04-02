@@ -122,7 +122,7 @@ export default function VideoLibraryClient() {
   }, [activeYear, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[var(--background)] p-6 md:p-10">
+    <div className="min-h-screen bg-[var(--background)] p-6 md:p-10 pt-24">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4">
