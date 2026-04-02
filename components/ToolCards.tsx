@@ -98,7 +98,7 @@ export default function ToolCards() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-6 lg:gap-6 max-w-6xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {tools.map((tool) => (
             <a
               key={tool.title}
