@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, Headphones, FileQuestion, Play, BookOpen, CalendarCheck, LucideIcon } from 'lucide-react';
+import { ArrowRight, Headphones, FileQuestion, Play, BookOpen, CalendarCheck, Film, LucideIcon } from 'lucide-react';
 import { useId } from 'react';
 
 interface Tool {
@@ -8,6 +8,7 @@ interface Tool {
   description: string;
   href: string;
   icon: LucideIcon;
+  external?: boolean;
 }
 
 const tools: Tool[] = [
@@ -16,30 +17,42 @@ const tools: Tool[] = [
     description: 'Interactive practice for octaves, periods, and more',
     href: 'https://resources.musictechstudio.co.uk',
     icon: Headphones,
+    external: true,
   },
   {
     title: 'ASSESSMENTS',
     description: 'Quizzes and practice papers for exam prep',
     href: 'https://assess.musictechstudio.co.uk',
     icon: FileQuestion,
+    external: true,
   },
   {
     title: 'VIDEO LESSONS',
     description: 'Watch educational videos on key topics',
     href: 'https://remotion-player-site.vercel.app',
     icon: Play,
+    external: true,
+  },
+  {
+    title: 'EXAM WALKTHROUGHS',
+    description: 'Watch past paper production question walkthroughs',
+    href: '/videos',
+    icon: Film,
+    external: false,
   },
   {
     title: 'ROOM BOOKINGS',
     description: 'Book the studio for mixing or recording rooms for tracking sessions',
     href: 'https://bookings.musictechstudio.co.uk',
     icon: CalendarCheck,
+    external: true,
   },
   {
     title: 'OBSIDIAN',
     description: 'Browse course notes, resources, and revision materials',
     href: 'https://publish.obsidian.md/a-level-music-tech-sherborne/a-level-music-tech-sherborne',
     icon: BookOpen,
+    external: true,
   },
 ];
 
@@ -85,13 +98,12 @@ export default function ToolCards() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-6 max-w-6xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-6 lg:gap-6 max-w-6xl mx-auto">
           {tools.map((tool) => (
             <a
               key={tool.title}
               href={tool.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(tool.external !== false ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               className="group relative bg-[var(--card-bg)] rounded-2xl p-10 card-hover border border-black/5 hover:border-black/10 h-full"
             >
               <div className="relative flex flex-col items-center text-center h-full">
