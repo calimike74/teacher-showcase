@@ -9,6 +9,7 @@ const navLinks = [
   { href: 'https://grades.musictechstudio.co.uk', label: 'Grades', external: true },
   { href: 'https://resources.musictechstudio.co.uk', label: 'Resources', external: true },
   { href: 'https://assess.musictechstudio.co.uk', label: 'Assessments', external: true },
+  { href: '/videos', label: 'Walkthroughs', external: false },
   { href: 'https://bookings.musictechstudio.co.uk', label: 'Bookings', external: true },
   { href: 'https://publish.obsidian.md/a-level-music-tech-sherborne/a-level-music-tech-sherborne', label: 'Obsidian', external: true },
 ];
@@ -39,8 +40,7 @@ export default function Navigation({ logoSrc }: { logoSrc?: string } = {}) {
               <a
                 key={link.href}
                 href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(link.external !== false ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 className="px-4 py-2 rounded-lg text-sm font-medium text-[#2D2D2D] dark:text-[#FAFAFA] hover:bg-[#FF6B35]/10 hover:text-[#FF6B35] transition-colors"
               >
                 {link.label}
@@ -68,8 +68,7 @@ export default function Navigation({ logoSrc }: { logoSrc?: string } = {}) {
               <a
                 key={link.href}
                 href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...(link.external !== false ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-4 py-2 rounded-lg text-sm font-medium text-[#2D2D2D] dark:text-[#FAFAFA] hover:bg-[#FF6B35]/10 hover:text-[#FF6B35]"
               >
