@@ -209,10 +209,10 @@ function TodoChecklist({
       {showNamePrompt && (
         <NamePrompt onSave={saveName} onCancel={() => { setShowNamePrompt(false); pendingFlagRef.current = null; }} />
       )}
-      {studentName && !showNamePrompt && flagMap.size > 0 && (
+      {studentName && !showNamePrompt && (
         <p className="text-[10px] text-[var(--foreground)]/40 mb-1">
-          Flagging as <strong className="text-[var(--foreground)]/60">{studentName}</strong>{' '}
-          <button onClick={() => setShowNamePrompt(true)} className="underline hover:text-[var(--foreground)]/60 cursor-pointer">Change</button>
+          Flagging as <strong className="text-[var(--foreground)]/60">{studentName}</strong>{' · '}
+          <button onClick={() => setShowNamePrompt(true)} className="underline hover:text-[var(--foreground)]/60 cursor-pointer">Not {studentName}?</button>
         </p>
       )}
 
@@ -274,7 +274,7 @@ function TodoChecklist({
                     onClick={() => handleFlagClick(i, item)}
                     title={isFlagged ? 'Remove help flag' : 'Flag for help'}
                     className={`mt-0.5 shrink-0 cursor-pointer transition-opacity ${
-                      isFlagged ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 max-md:opacity-60'
+                      isFlagged ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 max-md:opacity-100'
                     }`}
                   >
                     <HelpCircle
