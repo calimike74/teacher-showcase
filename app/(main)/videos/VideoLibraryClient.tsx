@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { Search } from 'lucide-react';
+import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import { Search, Check, HelpCircle, Flag } from 'lucide-react';
 import { examYears } from '@/lib/video-data';
 import type { ExamYear, Video, Difficulty } from '@/lib/video-data';
+
+const STUDENT_NAME_KEY = 'exam-student-name';
 
 // Sort: A2 before AS, then by year descending
 const sortedYears = [...examYears].sort((a, b) => {
@@ -46,7 +48,264 @@ function LevelBadge({ level }: { level: 'A2' | 'AS' }) {
   );
 }
 
-function VideoCard({ video }: { video: Video }) {
+function NamePrompt({ onSave, onCancel }: { onSave: (name: string) => void; onCancel?: () => void }) {
+  const [draft, setDraft] = useState('');
+  return (
+    <div className="flex items-center gap-2 py-2">
+      <span className="text-xs text-[var(--foreground)]/60">What&apos;s your name?</span>
+      <input
+        type="text"
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onKeyDown={(e) => { if (e.key === 'Enter' && draft.trim()) onSave(draft.trim()); }}
+        className="px-2 py-1 text-xs border border-black/10 rounded bg-[var(--card-bg)] text-[var(--foreground)] outline-none focus:ring-1 focus:ring-[#C5A855]"
+        placeholder="Your name"
+        autoFocus
+      />
+      <button
+        onClick={() => { if (draft.trim()) onSave(draft.trim()); }}
+        className="px-2 py-1 text-xs font-medium rounded text-white cursor-pointer"
+        style={{ backgroundColor: '#C5A855' }}
+      >
+        Save
+      </button>
+      {onCancel && (
+        <button onClick={onCancel} className="text-xs text-[var(--foreground)]/40 hover:text-[var(--foreground)]/60 cursor-pointer">
+          Cancel
+        </button>
+      )}
+    </div>
+  );
+}
+
+// flagMap key: step index number for per-step, or 'video' for whole-question flag
+// flagMap value: Supabase row id
+type FlagMap = Map<number | 'video', string>;
+
+function TodoChecklist({
+  videoId,
+  items,
+  videoTitle,
+  examYear,
+}: {
+  videoId: string;
+  items: string[];
+  videoTitle: string;
+  examYear: string;
+}) {
+  const storageKey = `exam-todo-${videoId}`;
+  const [completed, setCompleted] = useState<Set<number>>(new Set());
+  const [recentlyCompleted, setRecentlyCompleted] = useState<Set<number>>(new Set());
+
+  // Flag state
+  const [flagMap, setFlagMap] = useState<FlagMap>(new Map());
+  const [studentName, setStudentName] = useState<string | null>(null);
+  const [showNamePrompt, setShowNamePrompt] = useState(false);
+  const pendingFlagRef = useRef<{ stepIndex: number | null; stepText: string | null } | null>(null);
+
+  // Load checkbox state + student name on mount
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored) setCompleted(new Set(JSON.parse(stored)));
+    } catch {}
+    try {
+      const name = localStorage.getItem(STUDENT_NAME_KEY);
+      if (name) setStudentName(name);
+    } catch {}
+  }, [storageKey]);
+
+  // Hydrate flags when we have a student name
+  useEffect(() => {
+    if (!studentName) return;
+    fetch(`/api/flags?student=${encodeURIComponent(studentName)}&video=${encodeURIComponent(videoId)}`)
+      .then((r) => r.json())
+      .then((rows: Array<{ id: string; step_index: number | null }>) => {
+        const map: FlagMap = new Map();
+        for (const row of rows) {
+          const key = row.step_index !== null ? row.step_index : 'video';
+          map.set(key, row.id);
+        }
+        setFlagMap(map);
+      })
+      .catch(() => {});
+  }, [studentName, videoId]);
+
+  const toggle = useCallback((index: number) => {
+    setCompleted(prev => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+        setRecentlyCompleted(rc => new Set(rc).add(index));
+        setTimeout(() => setRecentlyCompleted(rc => {
+          const n = new Set(rc);
+          n.delete(index);
+          return n;
+        }), 400);
+      }
+      try { localStorage.setItem(storageKey, JSON.stringify([...next])); } catch {}
+      return next;
+    });
+  }, [storageKey]);
+
+  const saveName = useCallback((name: string) => {
+    setStudentName(name);
+    try { localStorage.setItem(STUDENT_NAME_KEY, name); } catch {}
+    setShowNamePrompt(false);
+    // If there was a pending flag action, execute it now
+    if (pendingFlagRef.current) {
+      const { stepIndex, stepText } = pendingFlagRef.current;
+      pendingFlagRef.current = null;
+      doFlag(name, stepIndex, stepText);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [videoId, videoTitle, examYear]);
+
+  const doFlag = useCallback(async (name: string, stepIndex: number | null, stepText: string | null) => {
+    const key = stepIndex !== null ? stepIndex : 'video';
+    const existingId = flagMap.get(key);
+
+    if (existingId) {
+      // Unflag
+      await fetch(`/api/flags?id=${existingId}`, { method: 'DELETE' });
+      setFlagMap(prev => { const next = new Map(prev); next.delete(key); return next; });
+    } else {
+      // Flag
+      const res = await fetch('/api/flags', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          student_name: name,
+          video_id: videoId,
+          video_title: videoTitle,
+          exam_year: examYear,
+          step_index: stepIndex,
+          step_text: stepText,
+        }),
+      });
+      const row = await res.json();
+      if (row.id) {
+        setFlagMap(prev => { const next = new Map(prev); next.set(key, row.id); return next; });
+      }
+    }
+  }, [flagMap, videoId, videoTitle, examYear]);
+
+  const handleFlagClick = useCallback((stepIndex: number | null, stepText: string | null) => {
+    if (!studentName) {
+      pendingFlagRef.current = { stepIndex, stepText };
+      setShowNamePrompt(true);
+      return;
+    }
+    doFlag(studentName, stepIndex, stepText);
+  }, [studentName, doFlag]);
+
+  const hasBullets = items.length > 0;
+
+  return (
+    <div>
+      {/* Name prompt or identity label */}
+      {showNamePrompt && (
+        <NamePrompt onSave={saveName} onCancel={() => { setShowNamePrompt(false); pendingFlagRef.current = null; }} />
+      )}
+      {studentName && !showNamePrompt && flagMap.size > 0 && (
+        <p className="text-[10px] text-[var(--foreground)]/40 mb-1">
+          Flagging as <strong className="text-[var(--foreground)]/60">{studentName}</strong>{' '}
+          <button onClick={() => setShowNamePrompt(true)} className="underline hover:text-[var(--foreground)]/60 cursor-pointer">Change</button>
+        </p>
+      )}
+
+      {hasBullets && (
+        <>
+          <div className="flex items-center justify-between mb-2">
+            <span className="block text-[10px] font-semibold uppercase tracking-wider" style={{ color: '#C5A855' }}>
+              Steps
+            </span>
+            <span className={`text-[10px] font-medium ${completed.size === items.length ? 'text-emerald-500' : 'text-[var(--foreground)]/40'}`}>
+              {completed.size}/{items.length} completed
+            </span>
+          </div>
+          <ul className="space-y-1">
+            {items.map((item, i) => {
+              const isDone = completed.has(i);
+              const showGlow = recentlyCompleted.has(i);
+              const isFlagged = flagMap.has(i);
+
+              return (
+                <li key={i} className="flex items-start gap-2.5 group">
+                  {/* Checkbox with glow */}
+                  <button
+                    onClick={() => toggle(i)}
+                    className="relative mt-0.5 shrink-0 flex items-center justify-center w-5 h-5 rounded-full border-2 cursor-pointer"
+                    style={{
+                      borderColor: isDone ? '#C5A855' : 'rgba(0,0,0,0.15)',
+                      backgroundColor: isDone ? '#C5A855' : 'transparent',
+                      transition: 'background-color 0.15s, border-color 0.15s',
+                    }}
+                  >
+                    {isDone && <Check className="w-3 h-3 text-white" strokeWidth={3} />}
+                    {showGlow && (
+                      <svg
+                        className="absolute inset-0 w-5 h-5 pointer-events-none"
+                        style={{ animation: 'glow-pulse 400ms ease-out forwards' }}
+                        viewBox="0 0 20 20"
+                      >
+                        <circle cx="10" cy="10" r="8" fill="none" stroke="#C5A855" strokeWidth="2" />
+                      </svg>
+                    )}
+                  </button>
+
+                  {/* Text */}
+                  <span
+                    className="flex-1 text-sm leading-snug"
+                    style={{
+                      textDecoration: isDone ? 'line-through' : 'none',
+                      opacity: isDone ? 0.4 : 0.7,
+                      color: 'var(--foreground)',
+                      transition: 'opacity 0.2s ease',
+                    }}
+                  >
+                    {item}
+                  </span>
+
+                  {/* Per-step flag icon */}
+                  <button
+                    onClick={() => handleFlagClick(i, item)}
+                    title={isFlagged ? 'Remove help flag' : 'Flag for help'}
+                    className={`mt-0.5 shrink-0 cursor-pointer transition-opacity ${
+                      isFlagged ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 max-md:opacity-60'
+                    }`}
+                  >
+                    <HelpCircle
+                      className={`w-4 h-4 ${isFlagged ? 'text-rose-500' : 'text-[var(--foreground)]/30 hover:text-[var(--foreground)]/50'}`}
+                      strokeWidth={isFlagged ? 2.5 : 1.5}
+                    />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      )}
+
+      {/* Per-video flag button */}
+      <button
+        onClick={() => handleFlagClick(null, null)}
+        className={`mt-3 flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg cursor-pointer transition-colors ${
+          flagMap.has('video')
+            ? 'bg-rose-500/10 text-rose-500'
+            : 'bg-black/5 text-[var(--foreground)]/50 hover:bg-black/10 hover:text-[var(--foreground)]/70'
+        }`}
+      >
+        <Flag className="w-3.5 h-3.5" fill={flagMap.has('video') ? 'currentColor' : 'none'} />
+        {flagMap.has('video') ? 'Help requested' : 'I need help with this question'}
+      </button>
+    </div>
+  );
+}
+
+function VideoCard({ video, examYear }: { video: Video; examYear: string }) {
   const hasBullets = video.bulletPoints.length > 0;
   const hasDescription = video.description.length > 0;
   const config = video.difficulty ? difficultyConfig[video.difficulty] : null;
@@ -78,15 +337,10 @@ function VideoCard({ video }: { video: Video }) {
             </div>
           )}
 
-          {hasBullets ? (
-            <ul className="space-y-1.5 text-[var(--foreground)]/70 text-sm list-disc list-inside">
-              {video.bulletPoints.map((point, i) => (
-                <li key={i}>{point}</li>
-              ))}
-            </ul>
-          ) : hasDescription ? (
-            <p className="text-[var(--foreground)]/60">{video.description}</p>
-          ) : null}
+          <TodoChecklist videoId={video.id} items={video.bulletPoints} videoTitle={video.title} examYear={examYear} />
+          {!hasBullets && hasDescription && (
+            <p className="text-[var(--foreground)]/60 -mt-3">{video.description}</p>
+          )}
         </div>
 
         {/* Right side — 16:9 YouTube embed */}
@@ -239,7 +493,7 @@ export default function VideoLibraryClient() {
               )}
 
               {filteredVideos.map((video) => (
-                <VideoCard key={video.id} video={video} />
+                <VideoCard key={video.id} video={video} examYear={activeYear.label} />
               ))}
             </div>
           </div>
