@@ -6,9 +6,21 @@ const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KE
 const TEACHER_EMAIL = process.env.TEACHER_EMAIL;
 const FROM = process.env.RESEND_FROM_EMAIL || 'Music Tech Studio <noreply@musictechstudio.co.uk>';
 
+/** Check flags_auth cookie matches FLAGS_PASSWORD. Returns 401 response or null if OK. */
+function requireFlagsAuth(req: NextRequest): NextResponse | null {
+  const cookie = req.cookies.get('flags_auth')?.value;
+  if (!cookie || cookie !== process.env.FLAGS_PASSWORD) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  return null;
+}
+
 // GET — fetch flags. If student+video params, fetch that student's flags for a video.
 // Otherwise fetch all (for teacher dashboard).
 export async function GET(req: NextRequest) {
+  const denied = requireFlagsAuth(req);
+  if (denied) return denied;
+
   const { searchParams } = req.nextUrl;
   const studentName = searchParams.get('student');
   const videoId = searchParams.get('video');
@@ -26,6 +38,9 @@ export async function GET(req: NextRequest) {
 
 // POST — create a flag
 export async function POST(req: NextRequest) {
+  const denied = requireFlagsAuth(req);
+  if (denied) return denied;
+
   const body = await req.json();
   const { student_name, video_id, video_title, exam_year, step_index, step_text } = body;
 
@@ -74,6 +89,9 @@ export async function POST(req: NextRequest) {
 
 // DELETE — remove a flag (unflag)
 export async function DELETE(req: NextRequest) {
+  const denied = requireFlagsAuth(req);
+  if (denied) return denied;
+
   const { searchParams } = req.nextUrl;
   const id = searchParams.get('id');
 
@@ -86,6 +104,9 @@ export async function DELETE(req: NextRequest) {
 
 // PATCH — resolve/unresolve a flag
 export async function PATCH(req: NextRequest) {
+  const denied = requireFlagsAuth(req);
+  if (denied) return denied;
+
   const body = await req.json();
   const { id, resolved } = body;
 
