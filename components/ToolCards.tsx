@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, Headphones, FileQuestion, Play, BookOpen, CalendarCheck, Film, LucideIcon } from 'lucide-react';
+import { ArrowRight, Headphones, FileQuestion, Play, BookOpen, CalendarCheck, Film, BarChart3, LucideIcon } from 'lucide-react';
 import { useId } from 'react';
 
 interface Tool {
@@ -22,7 +22,7 @@ const tools: Tool[] = [
   {
     title: 'ASSESSMENTS',
     description: 'Quizzes and practice papers for exam prep',
-    href: 'https://assess.musictechstudio.co.uk',
+    href: 'https://grades.musictechstudio.co.uk/practice',
     icon: FileQuestion,
     external: true,
   },
@@ -38,6 +38,13 @@ const tools: Tool[] = [
     description: 'Watch past paper production question walkthroughs',
     href: '/videos',
     icon: Film,
+    external: false,
+  },
+  {
+    title: 'EXAM DIFFICULTY',
+    description: 'How hard is an A*? See where Music Tech ranks.',
+    href: '/exam-difficulty',
+    icon: BarChart3,
     external: false,
   },
   {
