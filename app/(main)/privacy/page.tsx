@@ -26,7 +26,7 @@ export default function PrivacyPage() {
             For the purposes of UK GDPR and PECR, Music Tech Studio is the <strong>data controller</strong> for personal data collected through this site.
           </p>
           <p className="text-[var(--foreground)]/80 mt-2">
-            Contact: <a href="mailto:calimike@me.com" className="text-[#FF6B35] hover:underline">calimike@me.com</a>
+            Contact: <a href="mailto:privacy@musictechstudio.co.uk" className="text-[#FF6B35] hover:underline">privacy@musictechstudio.co.uk</a>
           </p>
         </section>
 
@@ -56,7 +56,7 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-semibold mb-3">Your rights</h2>
           <p className="text-[var(--foreground)]/80">
             Under UK GDPR you have the right to access, correct, delete, restrict, export, or object to processing of your personal data.
-            To exercise any of these, email <a href="mailto:calimike@me.com" className="text-[#FF6B35] hover:underline">calimike@me.com</a>.
+            To exercise any of these, email <a href="mailto:privacy@musictechstudio.co.uk" className="text-[#FF6B35] hover:underline">privacy@musictechstudio.co.uk</a>.
             You also have the right to complain to the{" "}
             <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-[#FF6B35] hover:underline">
               UK Information Commissioner's Office
