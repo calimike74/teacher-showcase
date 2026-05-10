@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Linkedin } from 'lucide-react';
 
 export default function Footer() {
@@ -23,6 +24,13 @@ export default function Footer() {
               <Linkedin className="w-4 h-4" />
               <span>Connect</span>
             </a>
+            <span className="text-[var(--foreground)]/20">|</span>
+            <Link
+              href="/privacy"
+              className="text-sm text-[var(--foreground)]/60 hover:text-[#A89BC8] transition-colors"
+            >
+              Privacy
+            </Link>
             <span className="text-[var(--foreground)]/20">|</span>
             <p className="text-sm text-[var(--foreground)]/40">
               Built with Claude Code
