@@ -8,8 +8,9 @@ import { Menu, X, Music } from 'lucide-react';
 const navLinks = [
   { href: 'https://grades.musictechstudio.co.uk', label: 'Grades', external: true },
   { href: 'https://resources.musictechstudio.co.uk', label: 'Resources', external: true },
-  { href: 'https://assess.musictechstudio.co.uk', label: 'Assessments', external: true },
+  { href: 'https://grades.musictechstudio.co.uk/practice', label: 'Assessments', external: true },
   { href: '/videos', label: 'Walkthroughs', external: false },
+  { href: '/signal-chain', label: 'Signal Chain', external: false },
   { href: 'https://bookings.musictechstudio.co.uk', label: 'Bookings', external: true },
   { href: 'https://publish.obsidian.md/a-level-music-tech-sherborne/a-level-music-tech-sherborne', label: 'Obsidian', external: true },
 ];
