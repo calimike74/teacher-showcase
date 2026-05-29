@@ -43,6 +43,7 @@
     activeScenario: null,
     _diagState: null,
     _faultIdx: new Set(), /* indices of faulty modules to highlight */
+    _focusIdx: null, /* module index to re-focus after a keyboard-driven re-render */
   };
 
   function insertIntoChain(key, idx) {
@@ -316,6 +317,7 @@
     if (state.chain.length === 0) {
       const empty = document.createElement('div');
       empty.className = 'rack-empty';
+      empty.setAttribute('role', 'status');
       empty.innerHTML = `<div>Empty rack &mdash; <em>add a module from the inventory below</em></div>`;
       row.appendChild(empty);
     } else {
@@ -331,6 +333,26 @@
           <button class="module-remove" aria-label="Remove ${esc(eff.name)}">×</button>
         `;
         mod.querySelector('.module-remove').addEventListener('click', (e) => { e.stopPropagation(); removeFromChain(i); });
+        /* Keyboard access: each module is a focusable control. Enter/Space selects it,
+           ←/→ reorder it, Delete/Backspace removes it. Pointer users are unaffected. */
+        mod.tabIndex = 0;
+        mod.setAttribute('role', 'group');
+        mod.setAttribute('aria-label',
+          `${eff.name}, position ${i + 1} of ${state.chain.length}. Enter to select, arrow keys to reorder, Delete to remove.`);
+        mod.addEventListener('keydown', (e) => {
+          switch (e.key) {
+            case 'Enter': case ' ':
+              e.preventDefault(); state._focusIdx = i; selectIdx(i); break;
+            case 'ArrowLeft':
+              if (i > 0) { e.preventDefault(); state._focusIdx = i - 1; moveInChain(i, i - 1); } break;
+            case 'ArrowRight':
+              if (i < state.chain.length - 1) { e.preventDefault(); state._focusIdx = i + 1; moveInChain(i, i + 2); } break;
+            case 'Delete': case 'Backspace':
+              e.preventDefault();
+              state._focusIdx = i < state.chain.length - 1 ? i : i - 1;
+              removeFromChain(i); break;
+          }
+        });
         attachPointerDrag(mod, {
           getSrc: () => ({ idx: i }),
           onCommit: (targetIdx) => moveInChain(i, targetIdx),
@@ -339,6 +361,13 @@
         row.appendChild(mod);
       });
     }
+
+    /* Restore focus to the relevant module after a keyboard-driven re-render */
+    if (state._focusIdx !== null && state._focusIdx >= 0 && state._focusIdx < state.chain.length) {
+      const refocus = row.querySelector(`.module[data-idx="${state._focusIdx}"]`);
+      if (refocus) refocus.focus();
+    }
+    state._focusIdx = null;
 
     /* Output endpoint */
     const outEp = document.createElement('div');
@@ -428,7 +457,7 @@
         </div>
         ${cats.map(c => `
           <div class="cat-group cat-${c}">
-            <p class="cat-title">${esc(catTitles[c])}</p>
+            <h3 class="cat-title">${esc(catTitles[c])}</h3>
             <div class="effect-list">
               ${Object.entries(EFFECTS).filter(([k, e]) => e.category === c).map(([k, e]) => `
                 <button class="effect-chip" data-category="${c}" data-key="${k}">${esc(e.name)}</button>
@@ -441,13 +470,18 @@
 
     let detailHTML = '';
     if (state.selectedIdx === null || !state.chain[state.selectedIdx]) {
-      detailHTML = `<div class="detail empty"><p>Click a module in the rack to read what it does — and why it sits where it sits.</p></div>`;
+      detailHTML = `<div class="detail empty"><p>Select a module in the rack to read what it does — and why it sits where it sits.</p></div>`;
     } else {
       const key = state.chain[state.selectedIdx];
       const eff = EFFECTS[key];
       let whyHere = '';
       if (state.activePreset && PRESETS[state.activePreset]?.whyHere?.[key]) {
         whyHere = `<div class="why-here"><h3>Why it sits here · ${esc(PRESETS[state.activePreset].name)}</h3><p>${esc(PRESETS[state.activePreset].whyHere[key])}</p></div>`;
+      }
+      let contextNow = '';
+      const ctxLine = window.getContextLine?.(key, state.selectedIdx, state.chain);
+      if (ctxLine) {
+        contextNow = `<div class="d-now${ctxLine.warn ? ' warn' : ''}"><span class="d-now-label">In this chain</span><p class="d-now-text">${esc(ctxLine.text)}</p></div>`;
       }
       const posStr = `POS&nbsp;<strong>${state.selectedIdx + 1}</strong>&nbsp;/&nbsp;${state.chain.length}`;
       detailHTML = `
@@ -461,6 +495,7 @@
           <div class="detail-body">
             <h2 class="detail-name"><em>${esc(eff.name)}</em></h2>
             <div class="detail-screen">${DISPLAYS[key]?.() || ''}</div>
+            ${contextNow}
             <div class="d-section"><h3>What it does</h3><p>${esc(eff.what)}</p></div>
             <div class="d-section"><h3>Why &amp; where you'd use it</h3><p>${esc(eff.use)}</p></div>
             ${whyHere}
@@ -551,7 +586,7 @@
         </div>`;
         /* Heuristic: highlight modules involved in fault */
         if (f.id === 'reverb_before_comp') {
-          state.chain.forEach((k, i) => { if (k === 'plate' || k === 'room' || k === 'comp') faultIdx.add(i); });
+          state.chain.forEach((k, i) => { if (k === 'plate' || k === 'room' || k === 'hall' || k === 'chamber' || k === 'comp') faultIdx.add(i); });
         } else if (f.id === 'no_gate_or_hpf_first' || f.id === 'gate_without_hpf_first') {
           if (state.chain[0]) faultIdx.add(0);
         } else if (f.id === 'comp_after_limiter') {
@@ -560,6 +595,8 @@
           state.chain.forEach((k, i) => { if (k === 'saturation' || k === 'peq') faultIdx.add(i); });
         } else if (f.id === 'gate_on_vocal') {
           state.chain.forEach((k, i) => { if (k === 'gate') faultIdx.add(i); });
+        } else if (f.id === 'chorus_on_lead_vocal') {
+          state.chain.forEach((k, i) => { if (k === 'chorus') faultIdx.add(i); });
         }
       });
       state._diagState = { phase: 'fault', html };
@@ -587,7 +624,7 @@
     document.querySelectorAll('.mode-btn').forEach(b => {
       const on = b.dataset.mode === newMode;
       b.classList.toggle('active', on);
-      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
     document.querySelectorAll('#presets-row .pill').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.pill.danger').forEach(b => b.classList.remove('active'));

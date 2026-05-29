@@ -119,6 +119,12 @@
           <stop offset="0%" stop-color="#0a0c10"/>
           <stop offset="100%" stop-color="#040608"/>
         </linearGradient>
+
+        <!-- LCD scanline texture (horizontal phosphor lines) -->
+        <pattern id="scanline-${id}" width="3" height="2" patternUnits="userSpaceOnUse">
+          <rect width="3" height="2" fill="transparent"/>
+          <rect width="3" height="1" fill="rgba(0,0,0,0.55)"/>
+        </pattern>
       </defs>
     `;
   }
@@ -278,7 +284,7 @@
         <!-- Glass overlay -->
         <rect width="${w}" height="${h}" fill="url(#vu-glass-${id})" opacity="0.16"/>
         <!-- Scanline -->
-        <rect width="${w}" height="${h}" fill="url(#scanline)" opacity="0.4"/>
+        <rect width="${w}" height="${h}" fill="url(#scanline-${id})" opacity="0.4"/>
       </g>
     `;
   }
@@ -672,6 +678,20 @@
         `;
       },
     },
+    tremolo: {
+      hp: 6, brand: 'WAVELAB', model: 'TRM·5', serial: '0512',
+      tagline: 'AMPLITUDE TREMOLO',
+      drawControls(key, id, w) {
+        return `
+          ${chickenHead(w/2 - 18, CTRL_Y + 18, 16, kv(key, 0), 'RATE', id)}
+          ${chickenHead(w/2 + 18, CTRL_Y + 18, 16, kv(key, 1), 'DEPTH', id)}
+          ${chickenHead(w/2, CTRL_Y + 58, 14, kv(key, 2), 'MIX', id)}
+          ${toggle(w/2 - 14, CTRL_Y + 94, 1, ['SQR', 'SIN'], 'WAVE')}
+          ${toggle(w/2 + 14, CTRL_Y + 94, 1, ['1/8', '1/4'], 'SYNC')}
+        `;
+      },
+    },
+
   };
 
   /* =====================================================================
@@ -687,8 +707,10 @@
     const cat = eff.category;
     const finishId = `m-${cat === 'eq' ? 'eq' : cat === 'dynamics' ? 'dyn' : cat === 'time' ? 'time' : cat === 'colour' ? 'colour' : 'mod'}-${id}`;
 
-    // Decide engraving color based on category panel (dark panel = light text, light panel = dark text)
-    const isLightPanel = cat === 'eq' || cat === 'time' || cat === 'colour';
+    // Decide engraving color based on category panel (dark panel = light text, light panel = dark text).
+    // Only EQ panels stay light top-to-bottom; the time and colour gradients fall to near-black in
+    // their lower 60% (where most knob/jack/serial labels sit), so they use light ink for legibility.
+    const isLightPanel = cat === 'eq';
 
     return `
       <svg class="panel-svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"

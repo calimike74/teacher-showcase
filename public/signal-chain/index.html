@@ -34,14 +34,14 @@
 </header>
 
 <div class="toolbar">
-  <div class="mode-toggle" role="tablist" aria-label="Mode">
-    <button class="mode-btn active" data-mode="build" role="tab" aria-selected="true"><span class="led" aria-hidden="true"></span>Build</button>
-    <button class="mode-btn" data-mode="diagnose" role="tab" aria-selected="false"><span class="led" aria-hidden="true"></span>Diagnose</button>
+  <div class="mode-toggle" role="group" aria-label="Mode">
+    <button class="mode-btn active" data-mode="build" aria-pressed="true"><span class="led" aria-hidden="true"></span>Build</button>
+    <button class="mode-btn" data-mode="diagnose" aria-pressed="false"><span class="led" aria-hidden="true"></span>Diagnose</button>
   </div>
   <div class="toolbar-meta">
-    <span><span class="kbd">Click</span>&nbsp;chip</span>
+    <span><span class="kbd">Click</span>&nbsp;module</span>
     <span><span class="kbd">Drag</span>&nbsp;reorder</span>
-    <span><span class="kbd">Click cable</span>&nbsp;unplug</span>
+    <span><span class="kbd">Click cable</span>&nbsp;disconnect</span>
   </div>
 </div>
 
@@ -71,8 +71,8 @@
   <button class="pill danger" data-scenario="pumping_master">Pumping master</button>
   <button class="pill danger" data-scenario="harsh_bass">Harsh bass</button>
   <button class="pill danger" data-scenario="choppy_vocal">Choppy vocal</button>
-  <button class="pill danger" data-scenario="sidechain_kick_bass">Kick masks bass</button>
   <button class="pill danger" data-scenario="glitchy_gate">Glitchy gate</button>
+  <button class="pill danger" data-scenario="seasick_chorus">Seasick chorus</button>
   <button class="pill-cta" id="diagnose-btn" disabled>Diagnose</button>
 </div>
 
@@ -91,6 +91,7 @@
 
 <script src="displays.js"></script>
 <script src="data.js"></script>
+<script src="context.js"></script>
 <script src="modules.js"></script>
 <script src="app.js"></script>
 </body>

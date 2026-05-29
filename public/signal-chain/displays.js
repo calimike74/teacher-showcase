@@ -255,18 +255,18 @@
       <path class="curve" d="M 20 86 Q 50 78 70 56 Q 90 30 110 16 Q 128 12 140 12"/>
       <text class="label-dim" x="4" y="20">OUT</text>
       <text class="label-dim" x="120" y="98">IN</text>
-      <!-- harmonic series, right -->
+      <!-- harmonic series, right — TAPE default emphasises EVEN harmonics (2, 4, 6) for warmth -->
       <text class="label-dim" x="158" y="20">HARMONICS</text>
       <line class="axis" x1="156" y1="86" x2="238" y2="86"/>
       <line class="ir-bar" x1="160" y1="86" x2="160" y2="22"/>
-      <line class="ir-bar" x1="174" y1="86" x2="174" y2="44" stroke-opacity="0.85"/>
-      <line class="ir-bar" x1="188" y1="86" x2="188" y2="36" stroke-opacity="0.9"/>
-      <line class="ir-bar" x1="202" y1="86" x2="202" y2="56" stroke-opacity="0.7"/>
-      <line class="ir-bar" x1="216" y1="86" x2="216" y2="48" stroke-opacity="0.75"/>
-      <line class="ir-bar" x1="230" y1="86" x2="230" y2="64" stroke-opacity="0.55"/>
+      <line class="ir-bar" x1="174" y1="86" x2="174" y2="40" stroke-opacity="0.9"/>
+      <line class="ir-bar" x1="188" y1="86" x2="188" y2="66" stroke-opacity="0.45"/>
+      <line class="ir-bar" x1="202" y1="86" x2="202" y2="50" stroke-opacity="0.8"/>
+      <line class="ir-bar" x1="216" y1="86" x2="216" y2="74" stroke-opacity="0.4"/>
+      <line class="ir-bar" x1="230" y1="86" x2="230" y2="62" stroke-opacity="0.6"/>
       <text class="label-dim" x="160" y="98" text-anchor="middle">1</text>
-      <text class="label-dim" x="188" y="98" text-anchor="middle">3</text>
-      <text class="label-dim" x="216" y="98" text-anchor="middle">5</text>
+      <text class="label-dim" x="174" y="98" text-anchor="middle">2</text>
+      <text class="label-dim" x="202" y="98" text-anchor="middle">4</text>
     </svg>
   `,
 
@@ -479,6 +479,38 @@
       <text class="label" x="38" y="98">SINE · ¼-NOTE</text>
     </svg>
   `,
+
+  tremolo: () => `
+    <svg viewBox="0 0 240 100" preserveAspectRatio="none" class="display">
+      <line class="axis" x1="0" y1="52" x2="240" y2="52"/>
+      <!-- amplitude envelope: a sine-wave-shaped volume curve enveloping the carrier -->
+      <!-- upper envelope -->
+      <path class="curve-2" d="M 0 28 Q 30 12 60 28 Q 90 44 120 28 Q 150 12 180 28 Q 210 44 240 28"/>
+      <!-- lower envelope (mirror) -->
+      <path class="curve-2" d="M 0 76 Q 30 92 60 76 Q 90 60 120 76 Q 150 92 180 76 Q 210 60 240 76"/>
+      <!-- carrier signal inside the envelope -->
+      <path class="curve" d="
+        M 0 52 L 4 36 L 8 52 L 12 68 L 16 52
+        L 20 28 L 24 52 L 28 76 L 32 52
+        L 36 30 L 40 52 L 44 74 L 48 52
+        L 52 36 L 56 52 L 60 68 L 64 52
+        L 68 44 L 72 52 L 76 60 L 80 52
+        L 84 38 L 88 52 L 92 66 L 96 52
+        L 100 30 L 104 52 L 108 74 L 112 52
+        L 116 30 L 120 52 L 124 74 L 128 52
+        L 132 36 L 136 52 L 140 68 L 144 52
+        L 148 44 L 152 52 L 156 60 L 160 52
+        L 164 36 L 168 52 L 172 68 L 176 52
+        L 180 30 L 184 52 L 188 74 L 192 52
+        L 196 36 L 200 52 L 204 68 L 208 52
+        L 212 44 L 216 52 L 220 60 L 224 52
+        L 228 38 L 232 52 L 236 66 L 240 52"/>
+      <text class="label" x="4" y="14">LFO 5 Hz · 40% DEPTH</text>
+      <text class="label-dim" x="234" y="14" text-anchor="end">SIN · ¼</text>
+      <text class="label-dim" x="4" y="98">AMPLITUDE MOD</text>
+    </svg>
+  `,
+
   };
 
   window.DISPLAYS = D;
