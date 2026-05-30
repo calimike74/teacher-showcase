@@ -7,7 +7,8 @@ export default function Home() {
   return (
     <div>
       {/* Hero Section - Full viewport with Mobius ribbon */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* -mt-16 pulls the hero up under the sticky nav so the ribbon shows behind it (content keeps its pt-16) */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden -mt-16">
         {/* Animated ribbon background */}
         <MobiusRibbon />
 

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Menu, X, Music } from 'lucide-react';
 
 const navLinks = [
@@ -17,9 +17,43 @@ const navLinks = [
 
 export default function Navigation({ logoSrc }: { logoSrc?: string } = {}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navShellRef = useRef<HTMLElement>(null);
+  const [stuck, setStuck] = useState(false);
+
+  useEffect(() => {
+    // Chromium handles the morph natively via @container scroll-state — skip JS there.
+    if (CSS.supports('container-type', 'scroll-state')) return;
+    const el = navShellRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => setStuck(e.intersectionRatio < 1),
+      { threshold: [1], rootMargin: '-1px 0px 0px 0px' }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-md border-b border-[#FF6B35]/10">
+    <>
+      {/* Native scroll-state morph (Chromium). Injected raw so Lightning CSS can't strip it.
+          Safari/Firefox use the .is-stuck JS fallback in globals.css instead. */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @container scroll-state(stuck: top) {
+          .nav-bar {
+            max-width: 70rem; margin: .5rem auto 0; border-radius: .75rem;
+            border-bottom-color: transparent;
+            background-color: rgb(255 255 255 / 0.92);
+            box-shadow: 0 8px 30px rgb(0 0 0 / 0.08);
+          }
+        }
+        @media (prefers-color-scheme: dark) {
+          @container scroll-state(stuck: top) {
+            .nav-bar { background-color: rgb(26 26 26 / 0.92); }
+          }
+        }
+      ` }} />
+      <nav ref={navShellRef} className={`nav-shell sticky top-0 z-50 ${stuck ? 'is-stuck' : ''}`}>
+      <div className="nav-bar bg-white/80 dark:bg-[#1A1A1A]/80 backdrop-blur-md border-b border-[#FF6B35]/10 transition-all duration-300">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
@@ -60,6 +94,7 @@ export default function Navigation({ logoSrc }: { logoSrc?: string } = {}) {
           </div>
         </div>
       </div>
+      </div>
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
@@ -79,6 +114,7 @@ export default function Navigation({ logoSrc }: { logoSrc?: string } = {}) {
           </div>
         </div>
       )}
-    </nav>
+      </nav>
+    </>
   );
 }
