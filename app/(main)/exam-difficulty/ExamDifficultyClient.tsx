@@ -121,6 +121,18 @@ const COMPARE_OPTIONS = [
   'Further Mathematics',
 ];
 
+type TrendPoint = { year: string; aStarA: number; rank: number; inflated?: boolean };
+
+// Music Technology, % awarded A or better, four summers (Pearson Edexcel).
+// 2022 was the peak of pandemic grade inflation; 2023 was the national reset to pre-COVID standards.
+const MT_TREND: TrendPoint[] = [
+  { year: '2022', aStarA: 28.7, rank: 39, inflated: true },
+  { year: '2023', aStarA: 12.7, rank: 42 },
+  { year: '2024', aStarA: 15.2, rank: 41 },
+  { year: '2025', aStarA: 14.1, rank: 42 },
+];
+const TREND_MAX = 32; // chart ceiling (%), gives headroom above the 2022 peak
+
 function aStarPct(s: Subject) {
   return (s.cum[0] / s.total) * 100;
 }
@@ -139,6 +151,7 @@ export default function ExamDifficultyClient() {
   const [activeSubject, setActiveSubject] = useState<string | null>(null);
   const [compareWith, setCompareWith] = useState<string>('Mathematics');
   const [animate, setAnimate] = useState(false);
+  const [trendIn, setTrendIn] = useState(false);
 
   const subjects = DATA[year];
   const ranked = useMemo(
@@ -171,6 +184,11 @@ export default function ExamDifficultyClient() {
     const t = window.setTimeout(() => setAnimate(true), 30);
     return () => window.clearTimeout(t);
   }, [year]);
+
+  useEffect(() => {
+    const t = window.setTimeout(() => setTrendIn(true), 80);
+    return () => window.clearTimeout(t);
+  }, []);
 
   const activeDetail = activeSubject ? subjects.find((s) => s.name === activeSubject) : null;
 
@@ -441,10 +459,74 @@ export default function ExamDifficultyClient() {
           </div>
         </section>
 
+        {/* FOUR-YEAR TREND */}
+        <section className={styles.trend}>
+          <div className={styles.trendHead}>
+            <h2 className={styles.trendTitle}>Is this just one bad year? No.</h2>
+            <p className={styles.trendSub}>
+              Music Tech&rsquo;s <strong>A-or-better</strong>{' '}rate across four summers. The fall after
+              2022 wasn&rsquo;t the subject getting harder — it was the <strong>national
+              post-pandemic grading reset</strong> that pulled <em>every</em> subject back to
+              pre-COVID standards. Music Tech simply settled back to where it has always sat: near
+              the very bottom of the table.
+            </p>
+          </div>
+
+          <div className={styles.trendChart} aria-hidden>
+            {MT_TREND.map((p) => (
+              <div key={p.year} className={styles.trendCol}>
+                <span
+                  className={`${styles.trendColVal} ${p.inflated ? styles.trendColValInflated : ''}`}
+                >
+                  {p.aStarA.toFixed(1)}%
+                </span>
+                <div
+                  className={`${styles.trendColBar} ${p.inflated ? styles.trendColBarInflated : ''}`}
+                  style={{ height: trendIn ? `${(p.aStarA / TREND_MAX) * 100}%` : '0%' }}
+                />
+              </div>
+            ))}
+          </div>
+          <div className={styles.trendAxis}>
+            {MT_TREND.map((p) => (
+              <div key={p.year} className={styles.trendAxisCell}>
+                <span className={styles.trendAxisYear}>{p.year}</span>
+                {p.inflated && <span className={styles.trendTag}>COVID peak</span>}
+              </div>
+            ))}
+          </div>
+
+          <p className={styles.trendReset}>
+            ↓&nbsp; 2022 → 2023: the system-wide reset more than halved Music Tech&rsquo;s A*–A rate
+            (28.7% → 12.7%).
+          </p>
+
+          <div className={styles.trendContext}>
+            <div className={styles.trendContextItem}>
+              <span className={styles.trendContextLabel}>Rank of 43 · A or better</span>
+              <span className={styles.trendContextValue}>
+                {MT_TREND.map((p) => p.rank).join(' → ')}
+              </span>
+              <span className={styles.trendContextNote}>2022 → 2025 · bottom-tier every year</span>
+            </div>
+            <div className={styles.trendContextItem}>
+              <span className={styles.trendContextLabel}>Maths fell too</span>
+              <span className={styles.trendContextValue}>46.9% → 40.9%</span>
+              <span className={styles.trendContextNote}>still ~3× Music Tech&rsquo;s rate</span>
+            </div>
+            <div className={styles.trendContextItem}>
+              <span className={styles.trendContextLabel}>Music fell too</span>
+              <span className={styles.trendContextValue}>50.0% → 29.2%</span>
+              <span className={styles.trendContextNote}>still ~2× Music Tech&rsquo;s rate</span>
+            </div>
+          </div>
+        </section>
+
         <p className={styles.footnote}>
-          Source: Pearson GCE Advanced Specifications Grade Statistics, June 2025 (provisional) and August 2024.
-          Subjects with fewer than 10 candidates are excluded by Pearson.
-          Music Technology is offered by Pearson Edexcel only — figures shown are the entire UK cohort.
+          Source: Pearson GCE Advanced Specifications Grade Statistics — June 2022, 2023 and 2024
+          (final) and June 2025 (provisional). Subjects with fewer than 10 candidates are excluded
+          by Pearson. Music Technology is offered by Pearson Edexcel only — figures shown are the
+          entire UK cohort.
         </p>
       </div>
     </div>
