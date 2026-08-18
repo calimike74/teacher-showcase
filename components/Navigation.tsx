@@ -6,7 +6,11 @@ import { useState, useRef, useEffect } from 'react';
 import { Menu, X, Music } from 'lucide-react';
 
 const navLinks = [
-  { href: 'https://grades.musictechstudio.co.uk', label: 'Grades', external: true },
+  // Mike's door into the grades dashboard. Points at the teacher sign-in
+  // directly: the dashboard's root page belongs to the paying member side
+  // since Aug 2026, and students never enter here (they hold personal token
+  // links), so the only person this button serves is the teacher.
+  { href: 'https://grades.musictechstudio.co.uk/teacher/login', label: 'Grades', external: true },
   { href: 'https://resources.musictechstudio.co.uk', label: 'Resources', external: true },
   { href: 'https://grades.musictechstudio.co.uk/practice', label: 'Assessments', external: true },
   { href: '/videos', label: 'Walkthroughs', external: false },
